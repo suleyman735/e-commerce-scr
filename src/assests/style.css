@@ -1,0 +1,26 @@
+/* // ---------------------------
+// 00 - VENDORS
+
+// ---------------------------
+// 01 - SETTINGS */
+
+/* @import './1 - settings/breakpoints';
+@import './1 - settings/colors';
+@import './1 - settings/sizes'; */
+@import './styles/settings/typography.css';
+/* @import './1 - settings/zindex'; */
+
+
+*{
+    margin: 0;
+    padding: 0;
+    /* box-sizing: border-box; */
+
+    /* color: aliceblue; */
+}
+body {
+    min-height: 100vh;
+  
+    font-size: var(--baseFontSize);
+
+  }

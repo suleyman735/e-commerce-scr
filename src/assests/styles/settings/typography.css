@@ -1,0 +1,26 @@
+
+/* // TYPOGRAPHY --------- */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap');
+
+:root{
+    
+    --baseFontSize : 16px;
+    --font-small: 14px;
+    --font-medium: 20px;
+    --font-large: 24px;
+    --font-xlarge: 48px;
+    --font-poppins:'Poppins', sans-serif;
+    --font-inter:'Inter', sans-serif;
+    --color-text-1:#FAFAFA;
+    --color-text-2:#7D8184;
+    --color-text-3:#000;
+    --secondary-2:#DB4444;
+    --button2:#DB4444;
+
+    
+
+
+
+}
+

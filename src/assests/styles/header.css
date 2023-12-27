@@ -1,0 +1,44 @@
+header{
+    width: 100%;
+    height: 100px;
+    /* background-color: aqua; */
+}
+.topHead{
+    display: flex;
+    width: 100%;
+    height: 48px;
+    padding: 12px 136px 12px 445px;
+    justify-content:space-around;
+    align-items: center;
+    flex-shrink: 0;
+
+
+    background-color: var(--color-text-3);
+}
+.topHead div{
+    font-size: var( --font-small);
+    font-family: var(--font-poppins);
+    font-style: normal;
+    font-weight: 400;
+    color: var(--color-text-1);
+    /* line-height: 21px; */
+}
+.topHead div .custom-navbar-brand{
+    font-size: var( --font-small);
+    font-family: var(--font-poppins);
+    font-style: normal;
+    font-weight: 600;
+    color: var(--color-text-1);
+    line-height: 24px;
+    text-decoration: underline;
+    text-align: center;
+
+}
+.topHead .language #nav-dropdown-dark-example{
+    font-size: var( --font-small);
+    font-family: var(--font-poppins);
+    color: var(--color-text-1);
+    font-weight: 400;
+
+}
+
