@@ -80,18 +80,20 @@ function Header() {
               
               <FaSearch className="search-icon"/>
               </div>
-              <div className="whilistcheckout">
-                
-              <CiHeart href="" className="icons"/>
 
+              <div className="whilistcheckout">
+                <button className="cart-button" >
+              <CiHeart href="" className="icons"/>
+              <span className="counter">{0}</span>
+              </button>
               <button className="cart-button" >
         <MdShoppingCartCheckout className="icons" />
-        <span className="counter">{0}</span>
+        <span className="counter">{1}</span>
       </button>
               {/* <MdShoppingCartCheckout  className="icons"/> */}
               </div>
               
-              
+               
             
           </div>
         </div>
@@ -109,7 +111,7 @@ function Header() {
           </div>
         </div>
       </div> */}
-      <hr />
+  
     </header>
   );
 }

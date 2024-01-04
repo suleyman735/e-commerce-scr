@@ -1,7 +1,8 @@
 header{
     width: 100%;
-    height: 100px;
-    /* background-color: aqua; */
+    height: auto;
+   
+    border-bottom: var(--color-text-2) 2px solid;
 }
 .topbar{
     display: flex;
@@ -157,6 +158,8 @@ background: var(--Secondary, #F5F5F5);
     position: relative;
   }
   .icons {
+    width: 32px;
+    height: 32px;
     margin-right: 5px;
   }
   
@@ -172,6 +175,9 @@ background: var(--Secondary, #F5F5F5);
     border-radius: 50%;
     padding: 5px;
     font-size: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
   
 
