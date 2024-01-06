@@ -1,16 +1,7 @@
 import React, { useState } from "react";
-import {
-  Navbar,
-  Container,
-  NavDropdown,
-  Nav,
-  LinkContainer,
-  
-  Row,
-  Col,
-} from "react-bootstrap";
+
 import "./../assests/styles/header.css";
-import Dropdown from "react-bootstrap/Dropdown";
+
 import { FaSearch } from "react-icons/fa";
 import { MdShoppingCartCheckout } from "react-icons/md";
 import { CiHeart } from "react-icons/ci";
@@ -47,28 +38,28 @@ function Header() {
         </div>
       </div>
 
-      <div className="container-inline">
-        <div className="navbar-container">
+
+        <div className="navbar-container container">
           <div className="navbar-brand">Exclusive</div>
           <div className="navbar-menu">
             <ul className="navbar-nav">
               <li className="nav-item">
-                <a href="" className="nav-link">
+                <a href="/" className="nav-link">
                   Home
                 </a>
               </li>
               <li className="nav-item">
-                <a href="" className="nav-link">
+                <a href="/" className="nav-link">
                   Contact
                 </a>
               </li>
               <li className="nav-item">
-                <a href="" className="nav-link">
+                <a href="/" className="nav-link">
                   Services
                 </a>
               </li>
               <li className="nav-item">
-                <a href="" className="nav-link">
+                <a href="/" className="nav-link">
                   Sign up
                 </a>
               </li>
@@ -97,7 +88,7 @@ function Header() {
             
           </div>
         </div>
-      </div>
+    
       
 
       {/* <div className="navbar">
