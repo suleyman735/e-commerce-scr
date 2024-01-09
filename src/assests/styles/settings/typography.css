@@ -6,9 +6,11 @@
 :root{
     
     --baseFontSize : 16px;
+    --font-exsmall: 12px;
     --font-small: 14px;
     --font-medium: 20px;
     --font-large: 24px;
+    --font-smalllarge: 36px;
     --font-xlarge: 48px;
     --font-poppins:'Poppins', sans-serif;
     --font-inter:'Inter', sans-serif;
@@ -18,6 +20,7 @@
     --secondary-2:#DB4444;
     --button2:#DB4444;
     --baseLineHeight:24px;
+    --mediumLineHeight:48px;
     --largeLineHeight:60px;
     
 

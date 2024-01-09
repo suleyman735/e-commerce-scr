@@ -1,0 +1,79 @@
+.flashSale{
+    margin-top: 100px;
+}
+.flashSale .today{
+    display: flex;
+    /* flex-direction: row; */
+    justify-content: flex-start;
+    align-items: center;
+    gap: 10px;
+}
+
+.flashSale .today .rectangle{
+    width: 20px;
+    height: 40px;
+    background-color: var(--secondary-2);
+}
+.flashSale .today .title{
+    color: var(--secondary-2);
+/* Title/16PX Semibold */
+font-family: var(--font-poppins);
+font-size: var(--baseFontSize);
+font-style: normal;
+font-weight: 600;
+line-height: 20px; /* 125% */
+
+}
+.flashtime{
+    display: flex;
+    justify-content:space-between;
+    align-items: center;
+    gap: 87px;
+}
+
+.flashtime .title{
+    color: var(--Text2, #000);
+/* Heading/36PX SemiBold */
+font-family: var(--font-inter);
+font-size: var(--font-smalllarge);
+font-style: normal;
+font-weight: 600;
+line-height: var(--mediumLineHeight); /* 133.333% */
+letter-spacing: 1.44px;
+}
+.flashtime .time table tr th{
+    padding-left: 20px;
+    color: var(--Text2, #000);
+/* Title/12PX Medium */
+font-family: Poppins;
+font-size: 12px;
+font-style: normal;
+font-weight: 500;
+line-height: 18px; /* 150% */
+
+
+}
+.flashtime .time table tr td{
+    padding-left: 20px;
+
+color: var(--Text2, #000);
+/* Heading/32PX Bold */
+font-family: Inter;
+font-size: 32px;
+font-style: normal;
+font-weight: 700;
+line-height: 30px; /* 93.75% */
+letter-spacing: 1.28px;
+}
+.flashtime .time table tr .redCall{
+    color: #E07575;
+}
+
+.nextprev .prev, .next{
+    width: 26px;
+    height: 26px;
+    background-color: #F5F5F5;
+    border-radius: 50%;
+
+
+}
