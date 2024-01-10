@@ -1,0 +1,23 @@
+/* styles.css */
+.star-rating {
+    display: flex;
+  }
+  
+ .star-rating span {
+    font-size: 20px;
+    margin-right: 5px;
+  } 
+  .star-rating .filled {
+    color: #FFAD33;; /* or any color you prefer for filled stars */
+  }
+  
+  .star-rating .empty {
+    color: rgba(0, 0, 0, 0.25); /* or any color you prefer for empty stars */
+  }
+  
+  /* .product-card {
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin: 10px;
+  } */
+  

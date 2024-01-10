@@ -1,5 +1,8 @@
 .flashSale{
     margin-top: 100px;
+
+  
+
 }
 .flashSale .today{
     display: flex;
@@ -68,12 +71,72 @@ letter-spacing: 1.28px;
 .flashtime .time table tr .redCall{
     color: #E07575;
 }
+  /* Navigation buttons */
+  .nextprev{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    
+  }
 
-.nextprev .prev, .next{
-    width: 26px;
-    height: 26px;
+.flashCards-container {
+    overflow: hidden;
+    margin-top: 40px;
+    position: relative;
+  }
+  
+  .flashCards {
+    display: flex;
+    gap: 15px;
+    transition: transform 0.7s ease-in-out;
+  }
+  
+
+  .nextprev .prev,
+  .next {
+    /* position: absolute; */
+    width: 24px;
+    height: 24px;
+    top: 50%;
+    transform: translateY(-50%);
     background-color: #F5F5F5;
+    color: black;
+    border: none;
+    padding: 3px;
+    cursor: pointer;
     border-radius: 50%;
+  }
+  
+  .next {
+    right: 0;
+  }
+  .flashButton{
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 
+  }
+  .button{
+    width: 234px;
+    height: 56px;
+    display: inline-flex;
+padding: 16px 48px;
+justify-content: center;
+align-items: center;
+gap: 10px;
+border-radius: 4px;
+background: var(--Button2, #DB4444);
+  }
+  .button a{
+    color: var(--Text, #FAFAFA);
 
-}
+/* Title/16PX Medium */
+font-family: Poppins;
+font-size: 16px;
+font-style: normal;
+font-weight: 500;
+line-height: 24px; /* 150% */
+  }
