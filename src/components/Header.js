@@ -80,11 +80,13 @@ function Header() {
                   Services
                 </a>
               </li>
-              <li className="nav-item">
-                <a href="/signup" className="nav-link">
-                  Sign up
-                </a>
-              </li>
+              {isAuthenticated ? <div></div>:               <li className="nav-item">
+
+<a href="/signup" className="nav-link">
+  Sign up
+</a>
+</li>}
+
             </ul>
           </div>
           <div className="container-end">

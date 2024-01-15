@@ -1,5 +1,5 @@
 
-import { BrowserRouter, Routes, Route,} from "react-router-dom";
+import { BrowserRouter, Routes, Route, Router,} from "react-router-dom";
 import Header from './components/Header';
 import Footer from './components/Footer';
 import Home from "./pages/Home";
@@ -13,7 +13,7 @@ import { useAuth } from "./context/AuthContext";
 
 
 function App() {
-  const { isAuthenticated, login } = useAuth();
+
 
   return (
     
@@ -21,6 +21,7 @@ function App() {
     
     <BrowserRouter>
     <Header />
+   
     <Routes>
       <Route exact path='/' element={<Home/>} />
       <Route exact path='/flash' element={<Flash/>} />
@@ -28,6 +29,7 @@ function App() {
       <Route exact path='/login' element={<Login/>} />
       
     </Routes>
+
     <Footer />
     </BrowserRouter>
 
