@@ -3,6 +3,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager
 
 from rest_framework_simplejwt.tokens import RefreshToken
+from collections import namedtuple
 
 class UserAccountManager(BaseUserManager):
     def create_user(self, email, password=None, **extra_fields):
@@ -21,6 +22,11 @@ class UserAccountManager(BaseUserManager):
         extra_fields.setdefault("is_staff",True)
         extra_fields.setdefault("is_superuser",True)
         return self.create_user(email,password,**extra_fields)
+    
+class TokenResponse(namedtuple('TokenResponse', ['refresh', 'access'])):
+    def as_dict(self):
+        return {'refresh': str(self.refresh), 'access': str(self.access)}
+
  
 class UserAccount(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(max_length=255, unique=True)
@@ -48,9 +54,10 @@ class UserAccount(AbstractBaseUser, PermissionsMixin):
     
     def tokens(self):
         refresh = RefreshToken.for_user(self)
-        return  {
+        return TokenResponse(refresh, refresh.access_token).as_dict()
+        
+        return  {    
             'refresh':str(refresh),
-            "access":str(refresh.access_token)
-            
+            'access':str(refresh.access_token)  
         }
     

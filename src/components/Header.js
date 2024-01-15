@@ -1,18 +1,40 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 
 import "./../assests/styles/header.css";
 
 import { FaSearch } from "react-icons/fa";
 import { MdShoppingCartCheckout } from "react-icons/md";
 import { CiHeart } from "react-icons/ci";
+import { MdAccountCircle } from "react-icons/md";
+import { ImCancelCircle } from "react-icons/im";
+import { CiLogout } from "react-icons/ci";
+import { useAuth } from "../context/AuthContext";
+
+
+// import AuthContext from "../context/AuthContext";
 
 
 
 function Header() {
   const [selectedOption, setSelectedOption] = useState("en");
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+  const { isAuthenticated, login } = useAuth();
+
+
+  const { logout } = useAuth();
+
+
+
 
   const handleDropdownChange = (event) => {
     setSelectedOption(event.target.value);
+  };
+
+
+
+  const toggleDropdown = () => {
+    setIsDropdownOpen(!isDropdownOpen);
   };
 
   return (
@@ -81,12 +103,30 @@ function Header() {
         <MdShoppingCartCheckout className="icons" />
         <span className="counter">{1}</span>
       </button>
-              {/* <MdShoppingCartCheckout  className="icons"/> */}
+      {isAuthenticated?  <button className="cart-button" onClick={toggleDropdown}> <MdAccountCircle  className="icons"/></button>:<div></div>}
+      {/* <button className="cart-button" onClick={toggleDropdown}> <MdAccountCircle  className="icons"/></button> */}
+
+           
               </div>
+              {isDropdownOpen && isAuthenticated  && (
+        <div className="dropdown-content">
+          {/* Your dropdown content goes here */}
+          <div>
+          <MdAccountCircle/> Manage My Account
+          </div>
+          <div><MdShoppingCartCheckout/>My Order</div>
+          <div><ImCancelCircle/> My Cancellations</div>
+          <div><CiHeart /> My Reviews</div>
+          <div onClick={logout}> <CiLogout/> Logout</div>
+        </div>
+      )}
+
+
               
                
             
           </div>
+          
         </div>
     
       

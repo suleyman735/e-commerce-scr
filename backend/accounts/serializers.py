@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from .models import UserAccount
-# from django.contrib import auth 
-# from rest_framework.exceptions import AuthenticationFailed
+from django.contrib import auth 
+from rest_framework.exceptions import AuthenticationFailed
 # from rest_framework_simplejwt.tokens import RefreshToken, TokenError
 # from django.contrib.auth.tokens import PasswordResetTokenGenerator
 # from django.utils.encoding import smart_str, force_str, smart_bytes, DjangoUnicodeDecodeError
@@ -37,3 +37,50 @@ class EmailVerificationSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserAccount
         fields = ['token']
+        
+        
+class LoginSerializer(serializers.ModelSerializer):
+    email = serializers.EmailField(max_length = 255,min_length=3)
+    password = serializers.CharField(max_length = 68,min_length=6,write_only = True)
+    first_name = serializers.CharField(max_length = 255,min_length=3,read_only=True)
+    last_name = serializers.CharField(max_length = 68,min_length=6,read_only=True)
+    tokens = serializers.CharField(max_length = 68,min_length=6,read_only=True)
+    
+    class Meta:
+        model = UserAccount
+        fields = ['email','password','first_name','last_name','tokens']
+    
+    # def get_tokens(self, user):
+    #     return {
+    #         'refresh': str(user.tokens['refresh']),
+    #         'access': str(user.tokens['access'])
+    #     }
+    def validate(self, attrs):
+        email = attrs.get('email','')
+        password = attrs.get('password','')
+        
+        user = auth.authenticate(email=email,password = password)
+        if not user:
+            raise AuthenticationFailed('Invalid credentials , try again')
+        
+        if not user.is_active:
+            raise AuthenticationFailed('Account disabled,contact admin')
+        
+        if not user.is_verified:
+            raise AuthenticationFailed('Email is not verified')
+            
+        
+
+        
+        return {
+            'email':user.email,
+            'first_name':user.first_name,
+            'last_name':user.last_name,
+            'tokens':user.tokens
+            
+        }
+        
+    # def to_representation(self, instance):
+    #     data = super().to_representation(instance)
+    #     data['access'] = self.get_tokens(instance)
+    #     return data
