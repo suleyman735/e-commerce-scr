@@ -1,0 +1,127 @@
+.account{
+    display: flex;
+    flex-direction: column;
+    
+}
+.account .welcome{
+    height: 150px;
+    text-align: end;
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+    align-items: center;
+    color: var(--Text2, #000);
+    gap: 7px;
+
+/* Title/14PX Regular */
+color: var(--color-text-3);
+font-family: var(--font-poppins);
+font-size: var(--font-small);
+font-style: normal;
+font-weight: 400;
+line-height: 21px; /* 150% */
+}
+.account .welcome div{
+    color: var(--secondary-2);
+
+/* Title/14PX Regular */
+font-family:  var(--font-poppins);
+font-size: var(--font-small);
+font-style: normal;
+font-weight: 400;
+line-height: 21px;
+}
+.main-section{
+    display:flex ;
+    flex-direction: row;
+    justify-content: space-between;
+
+}
+.main-section .manage-links{
+    width: 200px;
+    height: 630px;
+}
+.main-section .manage-links label{
+    color: var(--color-text-3);
+
+/* Title/16PX Medium */
+font-family: var(--font-poppins);
+font-size: 16px;
+font-style: normal;
+font-weight: 500;
+line-height: 24px; /* 150% */
+}
+
+.main-section .manage-links .my-account ul{
+    display: inline-flex;
+flex-direction: column;
+align-items: flex-start;
+gap: 8px;
+padding-left: 35px;
+}
+
+.main-section .manage-links .my-account ul li{
+    list-style: none;
+
+
+
+}
+.main-section .manage-links .my-account ul li{
+    color: var(--Text2, #000);
+    /* Title/16PX Regular */
+font-family: Poppins;
+font-size: 16px;
+font-style: normal;
+font-weight: 400;
+line-height: 24px; /* 150% */
+  
+}
+.main-section .manage-links .my-account ul li.active{
+    color: var(--secondary-2);
+}
+
+
+.main-section .manage-links .my-orders ul{
+    display: inline-flex;
+flex-direction: column;
+align-items: flex-start;
+gap: 8px;
+padding-left: 35px;
+}
+
+.main-section .manage-links .my-orders ul li{
+    list-style: none;
+
+
+
+}
+.main-section .manage-links .my-orders ul li{
+    color: var(--Text2, #000);
+    /* Title/16PX Regular */
+font-family: Poppins;
+font-size: 16px;
+font-style: normal;
+font-weight: 400;
+line-height: 24px; /* 150% */
+  
+}
+.main-section .manage-links .my-orders ul li.active{
+    color: var(--secondary-2);
+}
+
+
+
+
+
+
+
+
+.edit-profile{
+    width: 770px;
+    height: 630px;
+    border-radius: 4px;
+background: var(--Primary, #FFF);
+
+/* Categogy/5 */
+box-shadow: 0px 1px 13px 0px rgba(0, 0, 0, 0.05);
+}

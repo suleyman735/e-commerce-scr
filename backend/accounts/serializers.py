@@ -1,8 +1,12 @@
 from rest_framework import serializers
+
 from .models import UserAccount
 from django.contrib import auth 
 from rest_framework.exceptions import AuthenticationFailed
 from rest_framework_simplejwt.tokens import RefreshToken, TokenError
+
+from rest_framework.response import Response
+from rest_framework import status
 # from django.contrib.auth.tokens import PasswordResetTokenGenerator
 # from django.utils.encoding import smart_str, force_str, smart_bytes, DjangoUnicodeDecodeError
 # from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
@@ -74,8 +78,8 @@ class LoginSerializer(serializers.ModelSerializer):
         
         return {
             'email':user.email,
-            'first_name':user.first_name,
-            'last_name':user.last_name,
+            # 'first_name':user.first_name,
+            # 'last_name':user.last_name,
             'tokens':user.tokens
             
         }
@@ -100,3 +104,5 @@ class LogoutSerializer(serializers.Serializer):
 
         except TokenError:
             self.fail('bad_token')
+            
+            

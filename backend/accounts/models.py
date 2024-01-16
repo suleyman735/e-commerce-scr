@@ -4,6 +4,7 @@ from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseU
 
 from rest_framework_simplejwt.tokens import RefreshToken
 from collections import namedtuple
+from datetime import timedelta, datetime
 
 class UserAccountManager(BaseUserManager):
     def create_user(self, email, password=None, **extra_fields):
@@ -42,6 +43,14 @@ class UserAccount(AbstractBaseUser, PermissionsMixin):
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['first_name', 'last_name']
+    
+    # def remove_user_time(self):
+    #     user = super().objects.get(email=self.email)
+    #     register_time = user.created_at
+    #     ten_minutes_later = (register_time + timedelta(minutes=5))
+    #     if ten_minutes_later > datetime.now():
+    #         if user.is_verified == False:
+    #             user.delete()
 
     def get_full_name(self):
         return self.first_name
@@ -52,9 +61,13 @@ class UserAccount(AbstractBaseUser, PermissionsMixin):
     def __str__(self):
         return self.email
     
+    
+    # def token(self):
+    #     token = jwt.encode
+    
     def tokens(self):
         refresh = RefreshToken.for_user(self)
-        return TokenResponse(refresh, refresh.access_token).as_dict()
+        # return TokenResponse(refresh, refresh.access_token).as_dict()
         
         return  {    
             'refresh':str(refresh),

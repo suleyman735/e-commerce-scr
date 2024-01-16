@@ -9,6 +9,7 @@ import { MdAccountCircle } from "react-icons/md";
 import { ImCancelCircle } from "react-icons/im";
 import { CiLogout } from "react-icons/ci";
 import { useAuth } from "../context/AuthContext";
+import { Link } from "react-router-dom";
 
 
 // import AuthContext from "../context/AuthContext";
@@ -119,7 +120,7 @@ function Header() {
           <div><MdShoppingCartCheckout/>My Order</div>
           <div><ImCancelCircle/> My Cancellations</div>
           <div><CiHeart /> My Reviews</div>
-          <div onClick={logout}> <CiLogout/> Logout</div>
+          <div onClick={logout}> <CiLogout/> <Link to="/">Logout</Link> </div>
         </div>
       )}
 

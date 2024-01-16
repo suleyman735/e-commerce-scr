@@ -8,6 +8,7 @@ import Flash from "./pages/Flash";
 import Signup from "./pages/Signup";
 import Login from "./pages/Login";
 import { useAuth } from "./context/AuthContext";
+import Account from "./pages/Account";
 // import { QueryClient, QueryClientProvider } from 'react-query';
 
 
@@ -27,6 +28,7 @@ function App() {
       <Route exact path='/flash' element={<Flash/>} />
       <Route exact path='/signup' element={<Signup/>} />
       <Route exact path='/login' element={<Login/>} />
+      <Route exact path='/account' element={<Account/>} />
       
     </Routes>
 

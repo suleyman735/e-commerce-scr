@@ -3,12 +3,13 @@ import { createContext, useContext, useEffect, useState } from "react";
 import { jwtDecode } from "jwt-decode";
 
 import axios from "axios";
-
+import { useNavigate } from 'react-router-dom';
 
 const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
   // const navigate = useNavigate();
+
 
   const [isAuthenticated, setIsAuthenticated] = useState(
     Boolean(localStorage.getItem("access"))

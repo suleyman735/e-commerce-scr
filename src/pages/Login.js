@@ -1,11 +1,13 @@
 import React, { useState } from 'react'
 import mobile from './../assests/images/mobile.png'
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 
 function Login() {
   const [email,setEmail]=useState('')
   const [password,setPassword]=useState('')
+  const navigate = useNavigate();
 
   const handleLogin = async () => {
     try {
@@ -22,7 +24,7 @@ function Login() {
     localStorage.setItem('access', access);
     localStorage.setItem('refresh', refresh);
 
-     
+     navigate('/');
     } catch (error) {
       // Handle API error (e.g., display an error message)
       console.error('Error logging in:', error);
@@ -48,7 +50,7 @@ function Login() {
         <input placeholder='password' value={password} onChange={(e)=>setPassword(e.target.value)} type='password'/>
         </div>
         <div className="button-login">
-            <div className='login' onClick={handleLogin}><a href=''>Login</a> </div>
+            <div className='login' onClick={handleLogin}>Login </div>
            <div className='forget-pasword'><a href=''>Forgot password</a></div>
           
         </div>

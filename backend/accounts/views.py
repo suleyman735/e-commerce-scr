@@ -12,6 +12,10 @@ import jwt
 from django.conf import settings
 from .renderers import UserRenderer
 from django.utils.html import format_html
+from rest_framework.views import APIView
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.permissions import IsAuthenticated
+from .jwt import JWTAuthentication
 # from django.contrib.auth.tokens import PasswordResetTokenGenerator
 # from django.utils.encoding import smart_str, force_str, smart_bytes, DjangoUnicodeDecodeError
 # from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
@@ -77,6 +81,7 @@ class VerifyEmail(views.APIView):
         
 class LoginAPIView(generics.GenericAPIView):
     serializer_class = LoginSerializer
+    print(serializer_class)
 
     def post(self, request):
         serializer = self.serializer_class(data=request.data)
@@ -101,3 +106,22 @@ class LogoutAPIView(generics.GenericAPIView):
         serializer.save()
 
         return Response(status=status.HTTP_204_NO_CONTENT)
+    
+    
+    
+class UserProfileView(APIView):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        # Access the user profile using the request object
+        user_profile = request.user.profile  # Replace 'profile' with the actual profile attribute
+
+        # You can now use the 'user_profile' object as needed
+        data = {
+            'first_name': user_profile.user.first_name,
+            'email': user_profile.user.email,
+            # ... other profile attributes
+        }
+
+        return Response(data, status=status.HTTP_200_OK)
