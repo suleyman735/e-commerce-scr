@@ -109,19 +109,22 @@ class LogoutAPIView(generics.GenericAPIView):
     
     
     
-class UserProfileView(APIView):
-    authentication_classes = [JWTAuthentication]
+
+    
+    
+class UserDataView(APIView):
     permission_classes = [IsAuthenticated]
 
-    def get(self, request):
-        # Access the user profile using the request object
-        user_profile = request.user.profile  # Replace 'profile' with the actual profile attribute
-
-        # You can now use the 'user_profile' object as needed
+    def get(self, request, *args, **kwargs):
+        user = request.user
+        # Your logic to retrieve user-specific data
         data = {
-            'first_name': user_profile.user.first_name,
-            'email': user_profile.user.email,
-            # ... other profile attributes
+            'first_name': user.first_name,
+            'last_name':user.last_name,
+            'email': user.email,
+            'is_verified':user.is_verified,
+            'is_active':user.is_active,
+            'created_at':user.created_at
+            # Add more fields as needed
         }
-
-        return Response(data, status=status.HTTP_200_OK)
+        return Response(data)

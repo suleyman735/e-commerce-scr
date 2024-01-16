@@ -44,7 +44,7 @@ background: var(--Secondary, #F5F5F5);
 
 
 }
-.password input{
+.password .inp{
     width: 750px;
     flex-shrink: 0;
     margin-top: 16px;
