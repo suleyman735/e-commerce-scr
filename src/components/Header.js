@@ -115,7 +115,7 @@ function Header() {
         <div className="dropdown-content">
           {/* Your dropdown content goes here */}
           <div>
-          <MdAccountCircle/> Manage My Account
+         <Link to="/account"><MdAccountCircle/> Manage My Account</Link> 
           </div>
           <div><MdShoppingCartCheckout/>My Order</div>
           <div><ImCancelCircle/> My Cancellations</div>

@@ -3,7 +3,7 @@ from rest_framework import generics, status, views, permissions
 from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import RefreshToken
 from .models import UserAccount
-from .serializers import RegisterSerializer,EmailVerificationSerializer,LoginSerializer,LogoutSerializer
+from .serializers import RegisterSerializer,EmailVerificationSerializer,LoginSerializer,LogoutSerializer,UserDataSerializer,ChangePasswordSerializer
 from rest_framework.renderers import JSONRenderer
 from .utils import Util
 from django.contrib.sites.shortcuts import get_current_site
@@ -122,9 +122,37 @@ class UserDataView(APIView):
             'first_name': user.first_name,
             'last_name':user.last_name,
             'email': user.email,
+            # 'password':user.password,
             'is_verified':user.is_verified,
             'is_active':user.is_active,
             'created_at':user.created_at
             # Add more fields as needed
         }
         return Response(data)
+    
+    def put(self, request, *args, **kwargs):
+        user = request.user
+        serializer = UserDataSerializer(user, data=request.data)
+        password_serializer = ChangePasswordSerializer(data=request.data)
+        
+        
+
+        if serializer.is_valid() and password_serializer.is_valid():
+            new_email = serializer.validated_data.get('email')
+            
+            if UserAccount.objects.filter(email=new_email).exclude(email=user.email).exists():
+                return Response({'message': 'Email already exists'}, status=status.HTTP_400_BAD_REQUEST)
+            
+            serializer.save()
+            # Change password if old password is correct
+            old_password = password_serializer.validated_data.get('old_password')
+            new_password = password_serializer.validated_data.get('new_password')
+
+            if user.check_password(old_password):
+                user.set_password(new_password)
+                user.save()
+                return Response({'message': 'Password changed successfully'})
+            else:
+                return Response({'message': 'Incorrect old password'}, status=status.HTTP_400_BAD_REQUEST)
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

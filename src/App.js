@@ -9,6 +9,7 @@ import Signup from "./pages/Signup";
 import Login from "./pages/Login";
 import { useAuth } from "./context/AuthContext";
 import Account from "./pages/Account";
+import Verified from "./pages/Verified";
 // import { QueryClient, QueryClientProvider } from 'react-query';
 
 
@@ -29,6 +30,7 @@ function App() {
       <Route exact path='/signup' element={<Signup/>} />
       <Route exact path='/login' element={<Login/>} />
       <Route exact path='/account' element={<Account/>} />
+      <Route exact path='/verified' element={<Verified/>} />
       
     </Routes>
 

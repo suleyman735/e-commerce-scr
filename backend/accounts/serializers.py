@@ -106,3 +106,16 @@ class LogoutSerializer(serializers.Serializer):
             self.fail('bad_token')
             
             
+
+# it is for PUT request
+class UserDataSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = UserAccount
+        fields = ['first_name', 'last_name', 'email', 'is_verified', 'is_active']
+        
+        
+class ChangePasswordSerializer(serializers.Serializer):
+    old_password = serializers.CharField(required=True)
+    new_password = serializers.CharField(required=True)
+            
+            
