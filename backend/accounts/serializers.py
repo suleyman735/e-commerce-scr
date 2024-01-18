@@ -16,12 +16,21 @@ class RegisterSerializer(serializers.ModelSerializer):
         max_length=68, min_length=6, write_only=True)
 
     default_error_messages = {
-        'firs_name': 'The username should only contain alphanumeric characters'}
+        'firs_name': 'The username should only contain alphanumeric characters',
+        'email_exists': 'This email address is already in use',}
 
     class Meta:
         model = UserAccount
         fields = ['email', 'first_name', 'password']
         extra_kwargs = {'password': {'write_only': True}}
+        
+    def validate_email(self, value):
+        """
+        Check if the email address is already in use.
+        """
+        if UserAccount.objects.filter(email=value).exists():
+            raise serializers.ValidationError(self.default_error_messages['email_exists'])
+        return value
 
     def validate(self, attrs):
         email = attrs.get('email', '')

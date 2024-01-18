@@ -14,7 +14,9 @@ function Signup() {
 
   const navigate = useNavigate();
 
-  const handleSignup = async () => {
+  const handleSignup = async (e) => {
+   
+    e.preventDefault();
     try {
       const response = await fetch('http://127.0.0.1:8000/api/register/', {
         method: 'POST',
@@ -29,22 +31,23 @@ function Signup() {
         }),
       });
 
-      if (response.ok) {
+      // console.log(response.body);
 
-
-        navigate('/verified')
-
-        // Successfully signed up
-        console.log('User signed up successfully');
-        // You may want to redirect the user to another page or show a success message
-      } else {
-        // Handle error cases
-        const errorData = await response.json().catch(() => ({}));
-        console.error('Failed to sign up',errorData);
+      if (!response.ok) {
+        const errorData = await response.json();
+        // console.error('Error response from server:', errorData.errors.email);
+        setError(errorData.errors.email);
+        throw new Error(`Server error: ${errorData.detail || errorData.message}`);// Adjust this based on the actual error structure
       }
+      navigate('/verified')
+  
+
     } catch (error) {
-      console.error('Error during signup:', error.message);
+      // console.error('Registration failed:', error);
+
     }
+
+
   };
 
   return (
@@ -52,7 +55,10 @@ function Signup() {
         <div className="side-image">
             <img src={mobile} alt="" srcset="" />
         </div>
+        
         <div className="form">
+          
+<form onSubmit={handleSignup}>
             <div className="title">Create an account</div>
             <div className="description">Enter your details below</div>
             <div className="name">
@@ -62,20 +68,23 @@ function Signup() {
                 <input value={last_name} onChange={(e)=>setLast_Name(e.target.value)} placeholder='Last Name' required/>
             </div>
             <div className="email">
+            {error && <p style={{ color: 'red' }}>{error}</p>}
             <input value={email} onChange={(e)=>setEmail(e.target.value)}  placeholder='email'/>
             </div>
             <div className="password">
             <input value={password} onChange={(e)=>setPassword(e.target.value)}  placeholder='password' type='password' required/>
             </div>
-            <div className="button-create" onClick={handleSignup}>
-              <a>Create Account</a>  
+            <div className="button-create">
+            <button type='submit'>Create Account</button> 
             </div>
-            <div className="button-google">Sign up with Google</div>
+            <div className="button-google">
+              Sign up with Google</div>
             <div className="login-pass">Already have account? <a href='/login'>Login</a></div>
             
-
+ </form>
 
         </div>
+       
 
     </div>
   )

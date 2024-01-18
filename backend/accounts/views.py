@@ -56,7 +56,10 @@ class RegisterView(generics.GenericAPIView):
                 'email_subject': 'Verify your email'}
 
         Util.send_email(data)
-        return Response(user, status=status.HTTP_201_CREATED)
+        
+          # Instead of returning the entire user object, return a serialized version
+        serialized_user = self.serializer_class(user).data
+        return Response(serialized_user, status=status.HTTP_201_CREATED)
     
 class VerifyEmail(views.APIView):
     serializer_class = EmailVerificationSerializer
