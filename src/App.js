@@ -10,6 +10,8 @@ import Login from "./pages/Login";
 import { useAuth } from "./context/AuthContext";
 import Account from "./pages/Account";
 import Verified from "./pages/Verified";
+import ForgotPass from "./pages/ForgotPass";
+import ResetPass from "./pages/ResetPass";
 // import { QueryClient, QueryClientProvider } from 'react-query';
 
 
@@ -31,6 +33,8 @@ function App() {
       <Route exact path='/login' element={<Login/>} />
       <Route exact path='/account' element={<Account/>} />
       <Route exact path='/verified' element={<Verified/>} />
+      <Route exact path='/forgot' element={<ForgotPass/>} />
+      <Route exact path='/reset' element={<ResetPass/>} />
       
     </Routes>
 

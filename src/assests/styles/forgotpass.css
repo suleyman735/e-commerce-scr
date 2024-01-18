@@ -1,0 +1,26 @@
+.forgotPass{
+    height: 90vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+  
+}
+.forgotPassContainer{
+    width: 70%;
+    /* height: 50vh; */
+    background-color:azure;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+}
+
+.forgotPassContainer form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+}

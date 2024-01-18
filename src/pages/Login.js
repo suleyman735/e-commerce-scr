@@ -8,6 +8,7 @@ function Login() {
   const [email,setEmail]=useState('')
   const [password,setPassword]=useState('')
   const navigate = useNavigate();
+  const [error,setError]=useState(null)
 
   const handleLogin = async () => {
     try {
@@ -19,15 +20,18 @@ function Login() {
       var tokensString = response.data.tokens
       var tokens = JSON.parse(tokensString.replace(/'/g, '"'));
       const { refresh, access } = tokens;
-      console.log(refresh);
+      // console.log(refresh);
     // Store tokens in local storage or secure storage
     localStorage.setItem('access', access);
     localStorage.setItem('refresh', refresh);
 
      navigate('/');
     } catch (error) {
+      setError(error.response.data.detail)
+      console.log(error.response.data);
       // Handle API error (e.g., display an error message)
-      console.error('Error logging in:', error);
+ 
+      // console.error('Error logging in:', error.message);
     }
   };
 
@@ -39,22 +43,25 @@ function Login() {
     <div className="side-image">
         <img src={mobile} alt="" srcset="" />
     </div>
-    <div className="form">
+    <div className="form" >
+    
         <div className="title">Login in to Exclusive</div>
         <div className="description">Enter your details below</div>
+        {error && <p style={{ color: 'red' }}>{error}</p>}
 
         <div className="email">
-        <input placeholder='email' value={email} onChange={(e)=>setEmail(e.target.value)}/>
+        <input placeholder='email' value={email} onChange={(e)=>setEmail(e.target.value)} required/>
         </div>
         <div className="password">
-        <input placeholder='password' value={password} onChange={(e)=>setPassword(e.target.value)} type='password'/>
+        <input placeholder='password' value={password} onChange={(e)=>setPassword(e.target.value)} type='password' required/>
         </div>
         <div className="button-login">
-            <div className='login' onClick={handleLogin}>Login </div>
-           <div className='forget-pasword'><a href=''>Forgot password</a></div>
+            <button onClick={handleLogin} className='login'>Login </button>
+           <div className='forget-pasword'><a href='/forgot'>Forgot password</a></div>
           
         </div>
-
+        
+    
         
 
 
