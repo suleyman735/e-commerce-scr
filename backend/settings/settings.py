@@ -42,8 +42,12 @@ INSTALLED_APPS = [
     'accounts',
     'corsheaders',
     'rest_framework_simplejwt.token_blacklist',
+    'django_celery_beat',
+
     
 ]
+
+
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
@@ -201,3 +205,15 @@ EMAIL_HOST_USER = 'admin@suryadanza.com'
 EMAIL_HOST_PASSWORD = 'Surya@2023'
 EMAIL_USE_TLS = True
 EMAIL_USE_SSL = False
+
+
+CELERY_BEAT_SCHEDULE = {
+    'cleanup-unverified-users': {
+        'task': 'backend.accounts.tasks.cleanup_unverified_users',
+        'schedule': timedelta(minutes=1),  # Adjust as needed
+    },
+}
+
+# settings.py
+
+CELERY_BROKER_URL = 'redis://127.0.0.1:6379/0'

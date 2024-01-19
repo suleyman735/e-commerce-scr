@@ -44,13 +44,6 @@ class UserAccount(AbstractBaseUser, PermissionsMixin):
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['first_name', 'last_name']
     
-    # def remove_user_time(self):
-    #     user = super().objects.get(email=self.email)
-    #     register_time = user.created_at
-    #     ten_minutes_later = (register_time + timedelta(minutes=5))
-    #     if ten_minutes_later > datetime.now():
-    #         if user.is_verified == False:
-    #             user.delete()
 
     def get_full_name(self):
         return self.first_name
@@ -62,8 +55,7 @@ class UserAccount(AbstractBaseUser, PermissionsMixin):
         return self.email
     
     
-    # def token(self):
-    #     token = jwt.encode
+
     
     def tokens(self):
         refresh = RefreshToken.for_user(self)
@@ -73,4 +65,10 @@ class UserAccount(AbstractBaseUser, PermissionsMixin):
             'refresh':str(refresh),
             'access':str(refresh.access_token)  
         }
+        
+        
+        
+
+
+
     

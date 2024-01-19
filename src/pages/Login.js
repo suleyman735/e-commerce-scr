@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import mobile from './../assests/images/mobile.png'
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import ClipLoader from "react-spinners/ClipLoader";
 
 
 function Login() {
@@ -9,6 +10,7 @@ function Login() {
   const [password,setPassword]=useState('')
   const navigate = useNavigate();
   const [error,setError]=useState(null)
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleLogin = async () => {
     try {
@@ -24,11 +26,28 @@ function Login() {
     // Store tokens in local storage or secure storage
     localStorage.setItem('access', access);
     localStorage.setItem('refresh', refresh);
+    console.log(response);
 
-     navigate('/');
+    if (response.status === 200) {
+      setIsLoading(true)
+      
+    }
+          // Hide spinner after 3 seconds
+          // setIsLoading(false);
+  
+          // Redirect to a different page
+          navigate('/');
+      // Simulate API request or any asynchronous action
+      setTimeout(() => {
+        setIsLoading(false);
+        navigate('/');
+      }, 2000);
+    
+
+    //  navigate('/');
     } catch (error) {
-      setError(error.response.data.detail)
-      console.log(error.response.data);
+      setError(error.response.data.detail || error.response.data.password)
+  
       // Handle API error (e.g., display an error message)
  
       // console.error('Error logging in:', error.message);
@@ -44,6 +63,7 @@ function Login() {
         <img src={mobile} alt="" srcset="" />
     </div>
     <div className="form" >
+    {isLoading && <div><ClipLoader/></div>}
     
         <div className="title">Login in to Exclusive</div>
         <div className="description">Enter your details below</div>

@@ -2,7 +2,7 @@ import React from 'react'
 
 function Verified() {
   return (
-    <div>Verified</div>
+    <div className='container'> Please Verified your email</div>
   )
 }
 

@@ -1,3 +1,4 @@
+
 from django.shortcuts import render
 from rest_framework import generics, status, views, permissions
 from rest_framework.response import Response
@@ -19,10 +20,14 @@ from .jwt import JWTAuthentication
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from django.utils.encoding import smart_str, force_str, smart_bytes, DjangoUnicodeDecodeError
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
-from django.http import HttpResponsePermanentRedirect,HttpResponseRedirect
+from django.http import HttpResponsePermanentRedirect,HttpResponseRedirect,HttpResponse
+from datetime import timedelta, datetime
+    
+
 
 import os
-# Create your views here.
+
+
 
 
 class CustomRedirect(HttpResponsePermanentRedirect):
@@ -67,6 +72,7 @@ class RegisterView(generics.GenericAPIView):
                 'email_subject': 'Verify your email'}
 
         Util.send_email(data)
+       
         
           # Instead of returning the entire user object, return a serialized version
         serialized_user = self.serializer_class(user).data
@@ -96,7 +102,7 @@ class VerifyEmail(views.APIView):
 class LoginAPIView(generics.GenericAPIView):
     serializer_class = LoginSerializer
 
-
+            
     def post(self, request):
         serializer = self.serializer_class(data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -224,10 +230,10 @@ class LogoutAPIView(generics.GenericAPIView):
     
 class UserDataView(APIView):
     permission_classes = [IsAuthenticated]
+    
 
     def get(self, request, *args, **kwargs):
         user = request.user
-        # Your logic to retrieve user-specific data
         data = {
             'first_name': user.first_name,
             'last_name':user.last_name,
@@ -266,3 +272,14 @@ class UserDataView(APIView):
                 return Response({'message': 'Incorrect old password'}, status=status.HTTP_400_BAD_REQUEST)
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    
+
+
+
+from .tasks import my_task,cleanup_unverified_users
+
+def index(request):
+    cleanup_unverified_users().delay()
+    my_task().delay()
+    return HttpResponse('task started')
