@@ -14,7 +14,7 @@ function ForgotPass() {
         email: email,
       
       });
-      console.log(response.status);
+
 if (response.status===200) {
   setError(response.data.success)
   
@@ -26,7 +26,7 @@ if (response.status===200) {
     //  navigate('/');
     } catch (error) {
       setError(error.response.data.error)
-      console.log(error.response.data.error);
+      
 
     }
   };

@@ -33,7 +33,7 @@ function ResetPass() {
     }
   }, [token, uidb64]);
   const handleResetPassword = async () => {
-    console.log(uidb64, token, newPassword);
+  
     try {
       const response = await axios.patch(
         "http://127.0.0.1:8000/api/password-reset-complete/",
@@ -44,7 +44,7 @@ function ResetPass() {
         }
       );
       setError(response.data.message);
-      console.log("PATCH Response:", response);
+    
       setIsLoading(true);
 
       // Simulate API request or any asynchronous action

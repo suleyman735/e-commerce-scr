@@ -26,4 +26,7 @@ backend/env
 db.sqlite3
 backend/accounts/migrations
 backend/accounts/__pycache__
+backend/products/migrations
+backend/products/__pycache__
+backend/images
 

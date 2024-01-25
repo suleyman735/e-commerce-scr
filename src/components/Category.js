@@ -6,10 +6,15 @@ import computer from "../assests/images/Category-Computer.png"
 import headphones from "../assests/images/headphones.png"
 import gaming from "../assests/images/gaming.png"
 import watch from "../assests/images/watch.png"
+import { Link } from 'react-router-dom';
+import ProductScreen from '../pages/ProductScreen';
+import axios from 'axios';
 
 
 function Category() {
     const [currentSlide, setCurrentSlide] = useState(0);
+      // State to store the data fetched from the API
+  const [data, setData] = useState([]);
 
     const totalSlides = Math.ceil(4 / 3);
   
@@ -20,7 +25,28 @@ function Category() {
     const prevSlide = () => {
       setCurrentSlide((prevSlide) => (prevSlide - 1 + totalSlides) % totalSlides);
     };
+
+
+    const getCategory = ()=>{
+      axios.get('http://127.0.0.1:8000/api/category/')
+      .then(response => {
+        // Handle the successful response
+        setData(response.data);
+
+    
+      })
+      .catch(error => {
+        // Handle errors
+        console.error('Error fetching data:', error);
+      });
+    }
+
+
+
+
+
     useEffect(() => {
+      getCategory()
         // Automatically move to the next slide every 5 seconds (adjust the duration as needed)
         const intervalId = setInterval(() => {
           nextSlide();
@@ -58,63 +84,20 @@ function Category() {
     <div className="flashCards-container">
     <div className="flashCards" style={{ transform: `translateX(-${currentSlide * 100}%)` }}>
 
-        <div className="cat-box">
-            <div className="icon"> <img src={phones} alt="" /> </div>
-            <div className="title">Phones</div>
-        </div>
-        <div className="cat-box">
-            <div className="icon"> <img src={computer} alt="" /> </div>
-            <div className="title">Computer</div>
-        </div>
-        <div className="cat-box">
-            <div className="icon"> <img src={phones} alt="" /> </div>
-            <div className="title">Gaming</div>
-        </div>
-        <div className="cat-box">
-            <div className="icon"> <img src={watch} alt="" /> </div>
-            <div className="title">Watch</div>
-        </div>
-        <div className="cat-box">
-            <div className="icon"> <img src={phones} alt="" /> </div>
-            <div className="title">Headphones</div>
-        </div>
-        <div className="cat-box">
-            <div className="icon"> <img src={phones} alt="" /> </div>
-            <div className="title">Phones</div>
-        </div>
-        <div className="cat-box">
-            <div className="icon"> <img src={phones} alt="" /> </div>
-            <div className="title">Phones</div>
-        </div>
-        <div className="cat-box">
-            <div className="icon"> <img src={phones} alt="" /> </div>
-            <div className="title">Phones</div>
-        </div>
+      {data.map((item)=>(
+        
+                <div className="cat-box">
+                <div className="icon"> <img src={item.image} alt="" /></div>
+                <div className="title"><Link to={`/products/${item.id}`}>{item.name}</Link></div>
+            </div>
+      ))}
+
+       
 
 
 </div>
 
-
-
-    {/* <div className="flashCards" style={{ transform: `translateX(-${currentSlide * 100}%)` }}>
-      {discountedProducts.map((product, index) => (
-        <ProductCards key={index} product={product} />
-      ))}
-    </div> */}
-  </div>
-
-
-    
-
-  
-    {/* <div className="flashButton">
-        <div className="button"><a href=""> View All Products</a></div>
-   
-    </div> */}
-
-
-    
-          
+  </div>        
 </div>
   )
 }

@@ -3,10 +3,10 @@ import SideMenu from '../components/SideMenu'
 import FlashShales from '../components/FlashShales'
 import Category from '../components/Category'
 
-function Home() {
+function Home({addToCart}) {
   return (<>
     <SideMenu/>
-    <FlashShales />
+    <FlashShales addToCart={addToCart}/>
     <Category />
     </>
     

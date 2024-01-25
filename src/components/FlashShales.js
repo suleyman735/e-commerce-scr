@@ -2,11 +2,15 @@ import React,{useState,useEffect} from 'react'
 import './../assests/styles/flashSale.css'
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa6";
 import ProductCards from './ProductCards';
-import productData from '../constant/product';
+// import productData from '../constant/product';
+import { getProducts } from '../constant/api';
 
 
-function FlashShales() {
-    const discountedProducts = productData.filter(product => product.discount > 0);
+
+function FlashShales({addToCart}) {
+  const [products,setProducts] = useState([])
+
+    const discountedProducts = products.filter(product => product.discount > 0);
     
 
     const [currentSlide, setCurrentSlide] = useState(0);
@@ -21,6 +25,22 @@ function FlashShales() {
       setCurrentSlide((prevSlide) => (prevSlide - 1 + totalSlides) % totalSlides);
     };
     useEffect(() => {
+
+      const fetchData = async () => {
+        try {
+          const data = await getProducts();
+          setProducts(data);
+        } catch (error) {
+          // Handle error if needed
+        }
+      };
+  
+      fetchData();
+
+
+
+
+
         // Automatically move to the next slide every 5 seconds (adjust the duration as needed)
         const intervalId = setInterval(() => {
           nextSlide();
@@ -76,7 +96,7 @@ function FlashShales() {
         <div className="flashCards-container">
         <div className="flashCards" style={{ transform: `translateX(-${currentSlide * 100}%)` }}>
           {discountedProducts.map((product, index) => (
-            <ProductCards key={index} product={product} />
+            <ProductCards key={index} product={product} addToCart={addToCart}/>
           ))}
         </div>
       </div>

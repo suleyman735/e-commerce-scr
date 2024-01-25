@@ -5,14 +5,31 @@ import { CiHeart } from "react-icons/ci";
 import { MdOutlineRemoveRedEye } from "react-icons/md";
 import StarRating from './StarRating';
 
-function ProductCards({product}) {
+function ProductCards({product,addToCart}) {
     const [isHovered, setIsHovered] = useState(false);
-console.log(isHovered);
 
-const handleAddToCartClick = () => {
-    // Implement your logic for adding the product to the cart
-    console.log('Product added to cart:', product.name);
-  };
+
+
+// const handleAddToCartClick = (item) => {
+//     // Implement your logic for adding the product to the cart
+//     // setCart(product)
+//     // console.log('Product added to cart:', product._id);
+//   };
+//   const handleChange = (item, d) =>{
+//     let ind = -1;
+//     cart.forEach((data, index)=>{
+//         if (data.id === item.id)
+//             ind = index;
+//     });
+  
+//     const tempArr = cart;
+//     tempArr[ind].amount += d;
+    
+//     if (tempArr[ind].amount === 0)
+//         tempArr[ind].amount = 1;
+//     setCart([...tempArr])
+// }
+  
 
   return (
     <div className="product-card">
@@ -20,19 +37,19 @@ const handleAddToCartClick = () => {
             <div className="img">
                 <img src={imgage1} alt="" />
             </div>
-            <div className="discount">{product.discount*100 +'%'}</div>
+           {product.discount && product.discount !==0 ? ( <div className="discount">{product.discount*100 +'%'}</div>):null }
             <div className="likeWacht">
                 <div className="like"><CiHeart /></div>
                 <div className="watch"><MdOutlineRemoveRedEye/></div>
             </div>
-            <div  className={`add-to-cart ${isHovered ? 'active':''}`} onClick={handleAddToCartClick}>Add To Cart{isHovered}</div>
+            <div  className={`add-to-cart ${isHovered ? 'active':''}`} onClick={()=>addToCart(product)}>Add To Cart</div>
         </div>
         
         <div className="product-detail">
             <div className="title">{product.name}</div>
             <div className="pridis">
-                <div className="discount">{product.price-(product.price * product.discount).toFixed(2)}</div>
-                <div className="real">${product.price}</div>
+             {product.discount && product.discount !==0 ?(<><div className="discount">{product.price - (product.price * product.discount).toFixed(2)}</div><div className="real discountHas">${product.price}</div></>) : <div className="real">${product.price}</div> }   
+                
                 
             </div>
             <div className="star">

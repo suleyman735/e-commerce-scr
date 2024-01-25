@@ -8,7 +8,7 @@
     text-align: end;
     display: flex;
     flex-direction: row;
-    justify-content: end;
+    justify-content: flex-end;
     align-items: center;
     color: var(--Text2, #000);
     gap: 7px;

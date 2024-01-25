@@ -16,7 +16,7 @@ import { Link } from "react-router-dom";
 
 
 
-function Header() {
+function Header({size}) {
   const [selectedOption, setSelectedOption] = useState("en");
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
@@ -102,9 +102,9 @@ function Header() {
               <CiHeart href="" className="icons"/>
               <span className="counter">{0}</span>
               </button>
-              <button className="cart-button" >
-        <MdShoppingCartCheckout className="icons" />
-        <span className="counter">{1}</span>
+              <button className="cart-button"  >
+        <Link to="/checkout"><MdShoppingCartCheckout className="icons" /></Link>
+        <span className="counter">{size}</span>
       </button>
       {isAuthenticated?  <button className="cart-button" onClick={toggleDropdown}> <MdAccountCircle  className="icons"/></button>:<div></div>}
       {/* <button className="cart-button" onClick={toggleDropdown}> <MdAccountCircle  className="icons"/></button> */}

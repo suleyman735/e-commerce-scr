@@ -29,7 +29,7 @@ axios.get(API, {
   .then(response => {
     setUserData(response.data)
 
-    console.log('Response:', response.data);
+  
   })
   .catch(error => {
     console.error('Error:', error.message);
@@ -93,7 +93,7 @@ axios.get(API, {
 
 
 
-console.log(userData.first_name);
+
 
 
   return (

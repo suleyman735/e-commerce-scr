@@ -141,7 +141,10 @@ font-size: var(--baseFontSize);
 font-style: normal;
 font-weight: 500;
 line-height: var(--baseLineHeight); /* 150% */
-text-decoration-line:line-through;
+
+}
+.product-detail .pridis .real.discountHas{
+    text-decoration-line:line-through;
 }
 .active{
     display:contents;

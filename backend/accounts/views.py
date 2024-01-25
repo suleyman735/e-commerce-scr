@@ -16,7 +16,7 @@ from django.utils.html import format_html
 from rest_framework.views import APIView
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
-from .jwt import JWTAuthentication
+
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from django.utils.encoding import smart_str, force_str, smart_bytes, DjangoUnicodeDecodeError
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
@@ -280,6 +280,7 @@ class UserDataView(APIView):
 from .tasks import my_task,cleanup_unverified_users
 
 def index(request):
-    cleanup_unverified_users().delay()
+    # cleanup_unverified_users().delay()
     my_task().delay()
+  
     return HttpResponse('task started')

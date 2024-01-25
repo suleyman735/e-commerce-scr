@@ -22,11 +22,11 @@ function Login() {
       var tokensString = response.data.tokens
       var tokens = JSON.parse(tokensString.replace(/'/g, '"'));
       const { refresh, access } = tokens;
-      // console.log(refresh);
+     
     // Store tokens in local storage or secure storage
     localStorage.setItem('access', access);
     localStorage.setItem('refresh', refresh);
-    console.log(response);
+    
 
     if (response.status === 200) {
       setIsLoading(true)

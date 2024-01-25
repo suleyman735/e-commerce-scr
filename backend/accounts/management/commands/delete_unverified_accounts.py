@@ -6,12 +6,13 @@ from ...tasks import cleanup_unverified_users
 class Command(BaseCommand):
     help = 'Deletes unverified accounts with is_verified=False older than a specified duration.'
     print(help)
+    print(timezone.now()-timezone.timedelta(minutes=2))
 
     def handle(self, *args, **options):
         duration = timezone.now() - timezone.timedelta(minutes=2)
-        print(duration)
+        
         unverified_accounts = UserAccount.objects.filter(is_verified=False, created_at__lte=duration)
-        print(unverified_accounts)
+        
         
         for account in unverified_accounts:
             account.delete()

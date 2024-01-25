@@ -54,10 +54,10 @@ background: var(--Secondary, #F5F5F5);
 }
 .acc-buttons{
     display: flex;
-    justify-content: end;
+    justify-content: flex-end;
     gap: 32px;
     align-items: center;
-    
+     
 }
 .acc-buttons .cancel{
     color: var(--Text2, #000);

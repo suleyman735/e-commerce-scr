@@ -31,7 +31,7 @@ function Signup() {
         }),
       });
 
-      // console.log(response.body);
+      
 
       if (!response.ok) {
         const errorData = await response.json();

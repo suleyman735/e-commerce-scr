@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'accounts',
+    'products',
     'corsheaders',
     'rest_framework_simplejwt.token_blacklist',
     'django_celery_beat',
@@ -207,12 +208,22 @@ EMAIL_USE_TLS = True
 EMAIL_USE_SSL = False
 
 
+
+
 CELERY_BEAT_SCHEDULE = {
+    # "scheduled_task":{
+    #     "task":"backend.accounts.tasks.cleanup_unverified_users",
+    #     "schedule":5.0,
+    #     "args":(10,10)
+        
+    # },
     'cleanup-unverified-users': {
         'task': 'backend.accounts.tasks.cleanup_unverified_users',
-        'schedule': timedelta(minutes=1),  # Adjust as needed
+        'schedule': timedelta(minutes=1),
+        
     },
 }
+# timedelta(minutes=1)
 
 # settings.py
 

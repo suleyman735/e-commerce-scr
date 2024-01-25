@@ -30,7 +30,7 @@ function Slider() {
     setCurrentIndex(index);
   };
   const currentImageData = sliderObjects[currentIndex];
-  console.log(currentImageData.url);
+
 
   return (
     <div className="slider-container">

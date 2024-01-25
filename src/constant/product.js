@@ -6,7 +6,7 @@ const productData = [
         imageUrl: 'https://example.com/sample-image.jpg',
         rating: 3,
         discount: 0.4, // 10% discount
-        category: 'Electronics',
+        category: 'computer',
         isNewArrival: true,
         isBestSelling: false
       },
@@ -17,7 +17,7 @@ const productData = [
         imageUrl: 'https://example.com/another-sample-image.jpg',
         rating: 4,
         discount: 0.05, // 5% discount
-        category: 'Clothing',
+        category: 'phones',
         isNewArrival: false,
         isBestSelling: true
       },
@@ -31,7 +31,7 @@ const productData = [
         category: 'Clothing',
         isNewArrival: false,
         isBestSelling: true
-      },
+      }, 
       {
         name: 'Sample Product 4',
         description: 'This is another sample product description.',
@@ -39,7 +39,7 @@ const productData = [
         imageUrl: 'https://example.com/another-sample-image.jpg',
         rating: 3,
         discount: 0.20, // 5% discount
-        category: 'Clothing',
+        category: 'phones',
         isNewArrival: false,
         isBestSelling: true
       },
@@ -50,10 +50,12 @@ const productData = [
         imageUrl: 'https://example.com/another-sample-image.jpg',
         rating: 0,
         discount: 0.20, // 5% discount
-        category: 'Clothing',
+        category: 'phones',
         isNewArrival: false,
         isBestSelling: true
       },
 ];
 
 export default productData
+
+
