@@ -12,7 +12,6 @@ class Category(models.Model):
     
 
 class Product(models.Model):
-    # user = models.ForeignKey(UserAccount,on_delete=models.SET_NULL,null=True)
     name = models.CharField(max_length=200,null=True, blank=True)
     image = models.FileField(max_length=255, upload_to='images',null=True)
     brand= models.CharField(max_length=200,null=True, blank=True)
@@ -32,9 +31,12 @@ class Product(models.Model):
     def __str__(self):
         return self.name
     
+
+    
     
 class Order(models.Model):
     user = models.ForeignKey(UserAccount,on_delete=models.SET_NULL,null=True)
+    # items = models.ManyToManyField(OrderItem)
     paymentMethod=models.CharField(max_length=200,null=True, blank=True)
     taxPrice =  models.DecimalField(max_digits=7,decimal_places=2,null=True, blank=True)
     totalPrice =  models.DecimalField(max_digits=7,decimal_places=2,null=True, blank=True)
@@ -44,11 +46,8 @@ class Order(models.Model):
     deliveredAt = models.DateTimeField(auto_now_add=False,null=True,blank=True)
     createdAt = models.DateTimeField(auto_now_add=True)
     _id = models.AutoField(primary_key=True,editable=False)
-    transaction_id = models.CharField(max_length=200,null=True)
     
-    def __str__(self):
-        return str(self.createdAt) 
-    
+
     
 class OrderItem(models.Model):
     product = models.ForeignKey(Product,on_delete=models.SET_NULL,null=True)
@@ -61,7 +60,10 @@ class OrderItem(models.Model):
     date_added = models.DateTimeField(auto_now_add=True)
     
     def __str__(self):
-        return self.name
+        return self.name or f"OrderItem_{self.pk}"
+    
+    
+
     
 class ShippingAdress(models.Model):
     order = models.OneToOneField(Order,on_delete=models.CASCADE,null=True,blank=True)
@@ -74,3 +76,13 @@ class ShippingAdress(models.Model):
     
     def __str__(self):
         return self.name
+    
+    
+class Payment(models.Model):
+    stripe_charge_id = models.CharField(max_length=50)
+    user = models.ForeignKey(UserAccount, blank=True, null=True,on_delete=models.SET_NULL)
+    amount = models.FloatField()
+    timestamp = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.user.email

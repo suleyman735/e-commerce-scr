@@ -14,6 +14,8 @@ import ResetPass from "./pages/ResetPass";
 import ProductScreen from "./pages/ProductScreen";
 import Cart from "./pages/Cart";
 import { useState,useEffect } from "react";
+import Checkout from "./pages/Checkout";
+import { TotalPriceProvider } from "./context/TotalPriceContext";
 // import { QueryClient, QueryClientProvider } from 'react-query';
 
 function App() {
@@ -49,6 +51,16 @@ function App() {
     setCartItems(prevCart => prevCart.map(item => (item._id === productId ? { ...item, quantity: newQuantity } : item)));
   };
 
+  const calculateTotalPrice = () => {
+    return cartItems.reduce(
+      (total, item) =>
+        total +
+        item.price * item.quantity -
+        item.price * item.quantity * item.discount,
+      0
+    );
+  };
+
   useEffect(() => {
     // Save cart items to localStorage whenever it changes
     localStorage.setItem('cartItems', JSON.stringify(cartItems));
@@ -76,12 +88,16 @@ function App() {
             <ProductScreen  addToCart={addToCart}/>
           }
         />
+      
         <Route
           exact
-          path="/checkout"
-          element={<Cart  cartItems={cartItems} removeFromCart={removeFromCart} updateQuantity={updateQuantity}/>}
+          path="/check"
+          element={<Cart  cartItems={cartItems} removeFromCart={removeFromCart} updateQuantity={updateQuantity} calculateTotalPrice={calculateTotalPrice}/>}
         />
+     
+         <Route exact path="/checkout"  element={<Checkout cartItems={cartItems} calculateTotalPrice={calculateTotalPrice}/>} />
       </Routes>
+     
 
       <Footer />
     </BrowserRouter>

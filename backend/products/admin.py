@@ -18,7 +18,7 @@ class ProducAdmin(admin.ModelAdmin):
 admin.site.register(Product,ProducAdmin)
 
 class OrderAdmin(admin.ModelAdmin):
-    list_display = ['createdAt',]
+    list_display = ['user','createdAt',]
     # list_filter = ['lang']
 
 admin.site.register(Order,OrderAdmin)

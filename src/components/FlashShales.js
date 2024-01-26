@@ -106,7 +106,7 @@ function FlashShales({addToCart}) {
 
       
         <div className="flashButton">
-            <div className="button"><a href=""> View All Products</a></div>
+            <div className="button"><a href="/flash"> View All Products</a></div>
        
         </div>
 

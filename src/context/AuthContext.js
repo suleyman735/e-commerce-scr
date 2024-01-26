@@ -38,6 +38,7 @@ const AuthProvider = ({ children }) => {
     // Clear tokens from local storage
     localStorage.removeItem("access");
     localStorage.removeItem("refresh");
+   
     setIsAuthenticated(false);
 
     
@@ -71,7 +72,7 @@ const AuthProvider = ({ children }) => {
 
       // console.log(decodedToken);
     }
-  };
+  }; 
 
   useEffect(() => {
     expiredToken();

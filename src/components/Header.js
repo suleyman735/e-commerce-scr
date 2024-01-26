@@ -103,7 +103,7 @@ function Header({size}) {
               <span className="counter">{0}</span>
               </button>
               <button className="cart-button"  >
-        <Link to="/checkout"><MdShoppingCartCheckout className="icons" /></Link>
+        <Link to="/check"><MdShoppingCartCheckout className="icons" /></Link>
         <span className="counter">{size}</span>
       </button>
       {isAuthenticated?  <button className="cart-button" onClick={toggleDropdown}> <MdAccountCircle  className="icons"/></button>:<div></div>}
