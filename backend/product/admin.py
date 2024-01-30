@@ -11,6 +11,12 @@ class CategoryAdmin(admin.ModelAdmin):
 
 admin.site.register(Category,CategoryAdmin)
 
+class PaymentHistoryAdmin(admin.ModelAdmin):
+    list_display = ['user',]
+    # list_filter = ['lang']
+
+admin.site.register(PaymentHistory,PaymentHistoryAdmin)
+
 class ProducAdmin(admin.ModelAdmin):
     list_display = ['name',]
     # list_filter = ['lang']
@@ -18,19 +24,25 @@ class ProducAdmin(admin.ModelAdmin):
 admin.site.register(Product,ProducAdmin)
 
 class OrderAdmin(admin.ModelAdmin):
-    list_display = ['user','createdAt',]
+    list_display = ['user',]
     # list_filter = ['lang']
 
 admin.site.register(Order,OrderAdmin)
 
 class OrderItemAdmin(admin.ModelAdmin):
-    list_display = ['name',]
+    list_display = ['product','order']
     # list_filter = ['lang']
 
 admin.site.register(OrderItem,OrderItemAdmin)
 
-class ShippingAdressAdmin(admin.ModelAdmin):
-    list_display = ['_id',]
-    # list_filter = ['lang']
+# class TaxPerProductAdmin(admin.ModelAdmin):
+#     list_display = ['taxPerProduct']
+#     # list_filter = ['lang']
 
-admin.site.register(ShippingAdress,ShippingAdressAdmin)
+# admin.site.register(TaxPerProduct,TaxPerProductAdmin)
+
+# class ShippingAdressAdmin(admin.ModelAdmin):
+#     list_display = ['_id',]
+#     # list_filter = ['lang']
+
+# admin.site.register(ShippingAdress,ShippingAdressAdmin)

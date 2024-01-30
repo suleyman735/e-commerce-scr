@@ -1,10 +1,74 @@
-import React,{useEffect} from 'react'
+import React,{useEffect,useState} from 'react'
 import "./../assests/styles/checkout.css"
-import { useTotalPrice } from '../context/TotalPriceContext';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 
 function Checkout({cartItems,calculateTotalPrice}) {
-console.log(calculateTotalPrice());
+  const [orderData, setOrderData] = useState([cartItems]);
+  const orderId = localStorage.getItem("orderId");
+  console.log(orderId);
+  const navigate = useNavigate();
+  // const getOrders
+  
+  const sendOrderIrems = async (cartItems) => {
+    console.log(cartItems);
+    try {
+      // Get the Bearer token from wherever you store it (e.g., state, context, localStorage)
+
+      const token = localStorage.getItem("access");
+      const orderId = localStorage.getItem("orderId");
+ 
+      // Make the POST request using Axios
+      const response = await axios.post(
+        "http://127.0.0.1:8000/api/order-items/",
+        cartItems.map((item) => ({
+          qty: item.quantity,
+          price: item.price,
+          product: item._id, // Assuming you have a productId property in your cart item
+          order: orderId, // You may need to adjust this based on your API requirements
+        })),
+
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      // Handle the response as needed
+      console.log("Order sent successfully:", response);
+      if (response.status===201) {
+        // navigate(`/create-checkout-session/${orderId}`);
+
+              // Dynamically create a form
+      const form = document.createElement("form");
+      form.action = `http://127.0.0.1:8000/api/create-checkout-session/${orderId}/`;
+      form.method = "POST";
+
+      // Append the form to the body (you can append it to another element if needed)
+      document.body.appendChild(form);
+
+      // Submit the form
+      form.submit();
+
+        
+      }else{
+        console.log("serverr error",response);
+       
+      }
+    } catch (error) {
+      console.error("Error sending order:", error);
+    }
+  };
+
+
+
+  useEffect(() => {
+    setOrderData(cartItems);
+    // setTotalPrice(calculateTotalPrice());
+  }, [cartItems]);
 
   return (
     <div className='container checkout'>
@@ -76,9 +140,13 @@ console.log(calculateTotalPrice());
 
       
 
-          <div className="button-procees">
-            <a href="/checkout">Place Order</a>
+          <div className="button-procees"onClick={()=>{sendOrderIrems(orderData)}} >
+          Check for card
+   
           </div>
+          
+            
+      
         </div>
 
 </div>

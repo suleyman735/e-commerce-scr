@@ -13,6 +13,8 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 from pathlib import Path
 from datetime import timedelta
 
+
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -40,7 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'accounts',
-    'products',
+    'product',
     'corsheaders',
     'rest_framework_simplejwt.token_blacklist',
     'django_celery_beat',
@@ -89,7 +91,7 @@ DATABASES = {
 
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'tested',
+        'NAME': 'ecomtest',
         'USER': 'root',
         'PASSWORD': '',
         'HOST': '127.0.0.1',
@@ -111,6 +113,8 @@ REST_FRAMEWORK = {
     )
   
 }
+
+SRIPE_SECRET_KEY='sk_test_51Ocn32BQ6KDYdrauw8HE2dDg59cX5KYx8lUZ7I3O49MP3QSIJU0hOd91XCnsDG2IxQQorxKSvncVHrR62ua54DSt00rMofNY4N'
 
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=60),
@@ -228,3 +232,6 @@ CELERY_BEAT_SCHEDULE = {
 # settings.py
 
 CELERY_BROKER_URL = 'redis://127.0.0.1:6379/0'
+SITE_URL = 'http://localhost:3000/'
+
+STRIPE_SECRET_WEBHOOK="whsec_93137ddf761d4debc257b2f260eb30705828156b220f8a0773adf3cbafd5e56d"

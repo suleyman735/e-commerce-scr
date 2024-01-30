@@ -15,7 +15,7 @@ import ProductScreen from "./pages/ProductScreen";
 import Cart from "./pages/Cart";
 import { useState,useEffect } from "react";
 import Checkout from "./pages/Checkout";
-import { TotalPriceProvider } from "./context/TotalPriceContext";
+
 // import { QueryClient, QueryClientProvider } from 'react-query';
 
 function App() {

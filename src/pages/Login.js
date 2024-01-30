@@ -26,6 +26,8 @@ function Login() {
     // Store tokens in local storage or secure storage
     localStorage.setItem('access', access);
     localStorage.setItem('refresh', refresh);
+    localStorage.setItem('userId', response.data.id);
+    
     
 
     if (response.status === 200) {

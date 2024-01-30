@@ -1,6 +1,6 @@
 import React, { useEffect,useState } from 'react'
 import ProductCards from '../components/ProductCards'
-import productData from './../constant/product';
+
 
 import './../assests/styles/flash.css'
 import { getProducts } from '../constant/api';

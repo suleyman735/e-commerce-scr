@@ -1,29 +1,106 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "./../assests/styles/cart.css";
 import { FaAngleDown, FaAngleUp } from "react-icons/fa";
 import { useAuth } from "../context/AuthContext";
-import { useTotalPrice } from "../context/TotalPriceContext";
+import axios from "axios";
+import { useNavigate } from 'react-router-dom';
 
+export default function Cart({
+  cartItems,
+  removeFromCart,
+  updateQuantity,
+  calculateTotalPrice,
+}) {
 
-export default function Cart({ cartItems, removeFromCart, updateQuantity,calculateTotalPrice }) {
+  const navigate = useNavigate();
   const { isAuthenticated, login } = useAuth();
-  const { totalPrice, setTotalPrice } = useTotalPrice();
-  console.log(totalPrice);
+  const [orderData, setOrderData] = useState([cartItems]);
+  const initialCartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
+  console.log(orderData.map((e) => console.log(e._id)));
 
-//   const calculateTotalPrice = () => {
-//     return cartItems.reduce(
-//       (total, item) =>
-//         total +
-//         item.price * item.quantity -
-//         item.price * item.quantity * item.discount,
-//       0
-//     );
-//   };
+  // console.log(cartItems);
+  const sendOrderIrems = async (cartItems) => {
+    console.log(cartItems);
+    try {
+      // Get the Bearer token from wherever you store it (e.g., state, context, localStorage)
+
+      const token = localStorage.getItem("access");
+
+      // Make the POST request using Axios
+      const response = await axios.post(
+        "http://127.0.0.1:8000/api/order-items/",
+        cartItems.map((item) => ({
+          qty: item.quantity,
+          price: item.price,
+          product: item._id, // Assuming you have a productId property in your cart item
+          order: 1, // You may need to adjust this based on your API requirements
+        })),
+
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      // Handle the response as needed
+      console.log("Order sent successfully:", response.data);
+    } catch (error) {
+      console.error("Error sending order:", error);
+    }
+  };
+
+  const sendOrdersTotal=async()=>{
+    const token = localStorage.getItem("access");
+    const userId = localStorage.getItem("userId");
+    console.log(userId);
+
+    try {
+      const response = await axios.post("http://127.0.0.1:8000/api/orders/",
+    {
+        
+        taxPrice: "34.00",
+        totalPrice: calculateTotalPrice(),
+        createdAt: "2024-01-29T13:06:04.734712Z",
+        user: userId
+    },
+
+
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    )
+    const orderId = response.data._id;
+    localStorage.setItem('orderId', orderId);
+
+    console.log("Order sent successfully:", response.data._id);
+
+    navigate(`/checkout`);
+    } catch (error) {
+      console.error("Error sending order:", error);
+      
+    }
+
+  }
+
+  //   const calculateTotalPrice = () => {
+  //     return cartItems.reduce(
+  //       (total, item) =>
+  //         total +
+  //         item.price * item.quantity -
+  //         item.price * item.quantity * item.discount,
+  //       0
+  //     );
+  //   };
 
   useEffect(() => {
+    setOrderData(cartItems);
     // setTotalPrice(calculateTotalPrice());
   }, [cartItems]);
-
 
   return (
     <div className="container cart">
@@ -107,7 +184,7 @@ export default function Cart({ cartItems, removeFromCart, updateQuantity,calcula
             <div className="title"> Total </div>
             <div className="price">${calculateTotalPrice()}</div>
           </div>
-          <div className="button-procees">
+          <div className="button-procees" sendOrdersTotal onClick={sendOrdersTotal}>
             <a href="/checkout">Procees to checkout</a>
           </div>
         </div>
@@ -115,3 +192,4 @@ export default function Cart({ cartItems, removeFromCart, updateQuantity,calcula
     </div>
   );
 }
+// sendOrderIrems(orderData
