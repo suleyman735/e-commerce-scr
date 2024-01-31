@@ -117,7 +117,7 @@ function Header({size}) {
           <div>
          <Link to="/account"><MdAccountCircle/> Manage My Account</Link> 
           </div>
-          <div><MdShoppingCartCheckout/>My Order</div>
+          <div><Link to="/order"><MdShoppingCartCheckout/>My Order</Link></div>
           <div><ImCancelCircle/> My Cancellations</div>
           <div><CiHeart /> My Reviews</div>
           <div onClick={logout}> <CiLogout/> <Link to="/">Logout</Link> </div>

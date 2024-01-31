@@ -87,15 +87,6 @@ export default function Cart({
 
   }
 
-  //   const calculateTotalPrice = () => {
-  //     return cartItems.reduce(
-  //       (total, item) =>
-  //         total +
-  //         item.price * item.quantity -
-  //         item.price * item.quantity * item.discount,
-  //       0
-  //     );
-  //   };
 
   useEffect(() => {
     setOrderData(cartItems);

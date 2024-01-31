@@ -241,7 +241,8 @@ class UserDataView(APIView):
             # 'password':user.password,
             'is_verified':user.is_verified,
             'is_active':user.is_active,
-            'created_at':user.created_at
+            'created_at':user.created_at,
+            'orders':[1]
             # Add more fields as needed
         }
         return Response(data)

@@ -27,17 +27,17 @@ class CreateCheckOutSession(APIView):
     def post(self, request, *args, **kwargs):
         order__id=self.kwargs["pk"]
         try:
-            product=Order.objects.get(_id=order__id)
-            print(product)
+            order=Order.objects.get(_id=order__id)
+            print(order)
             checkout_session = stripe.checkout.Session.create(
                 line_items=[
                     {
                         # Provide the exact Price ID (for example, pr_1234) of the product you want to sell
                         'price_data': {
                             'currency':'usd',
-                             'unit_amount':int(product.totalPrice) * 100,
+                             'unit_amount':int(order.totalPrice) * 100,
                              'product_data':{
-                                 'name':product.user,
+                                 'name':order.user,
                                 #  'images':[f"{API_URL}/{product.product_image}"]
 
                              }
@@ -46,7 +46,7 @@ class CreateCheckOutSession(APIView):
                     },
                 ],
                 metadata={
-                    "product_id":product._id
+                    "order_id":order._id
                 },
                 payment_method_types=['card',],
                 mode='payment',
@@ -76,13 +76,13 @@ def my_webhook_view(request):
   if event['type'] == 'checkout.session.completed':
             session = event['data']['object']
             customer_email=session['customer_details']['email']
-            order__id=session['metadata']['product_id']
-            product=Order.objects.get(_id=order__id)
+            order__id=session['metadata']['order_id']
+            order=Order.objects.get(_id=order__id)
             user = UserAccount.objects.get(email=customer_email)
             #sending confimation mail
             send_mail(
                 subject="payment sucessful",
-                message=f"thank for your purchase your order is ready.  download url {product.totalPrice}",
+                message=f"thank for your purchase your order is ready.  download url {order.totalPrice}",
                 recipient_list=[customer_email],
                 from_email="admin@suryadanza.com"
             )
@@ -90,7 +90,7 @@ def my_webhook_view(request):
             #creating payment history
             # user=User.objects.get(email=customer_email) or None
 
-            PaymentHistory.objects.create(user=user,product=product, payment_status=True)
+            PaymentHistory.objects.create(user=user,orderpayment=order, payment_status=True)
 
   # Passed signature verification
   return HttpResponse(status=200)
@@ -110,19 +110,58 @@ class ProductListView(generics.ListAPIView):
 
 
 class OrderListCreateView(generics.ListCreateAPIView):
-    queryset = Order.objects.all()
+    # queryset = Order.objects.all()
     serializer_class = OrderSerializer
     
-class OrderCreateAPIView(generics.CreateAPIView):
-    queryset = Order.objects.all()
-    serializer_class = OrderSerializer
+    def get_queryset(self):
+        user = self.request.user
+        if user.is_staff:
+            return Order.objects.all()
+        else:
+            
+        # Return only orders created by the authenticated user
+            return Order.objects.filter(user=self.request.user)
+    
+    def perform_create(self, serializer):
+        # Set the user field based on the currently authenticated user
+        serializer.save(user=self.request.user)
+
+    def post(self, request, *args, **kwargs):
+        # Override the post method to handle the perform_create logic
+        return super().post(request, *args, **kwargs)
+    
+    def get_serializer_class(self):
+        if self.request.method == 'GET':
+            # Apply OrderWithPaymentSerializer for GET requests
+            return OrderWithPaymentSerializer
+        else:
+            # Use the original OrderSerializer for other request methods
+            return OrderSerializer
+        
+    def get(self, request, *args, **kwargs):
+        # Override the get method to include payment history for GET requests
+        response = super().get(request, *args, **kwargs)
+        if self.request.method == 'GET':
+            # Retrieve the payment history for each order in the response
+            orders_data = response.data
+            for order_data in orders_data:
+                order_id = order_data['_id']
+                payment_history = PaymentHistory.objects.filter(orderpayment_id=order_id)
+                order = OrderItem.objects.filter(order_id=order_id)
+                payment_serializer = PaymentSerializer(payment_history, many=True)
+                orderItem_serializer = OrderItemSerializer(order,many=True)
+                order_data['payment_history'] = payment_serializer.data
+                order_data['order'] = orderItem_serializer.data
+        return response
+
 
     
 class OrderItemListCreateView(generics.ListCreateAPIView):
     queryset = OrderItem.objects.all()
     serializer_class = OrderItemSerializer
     
-    def create(self, request, *args, **kwargs):
+
+    def post(self, request, *args, **kwargs):
         # Assuming the request data is a list of order items
         order_items_data = request.data
 

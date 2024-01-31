@@ -20,37 +20,41 @@ class CategoryListSerializer(serializers.ModelSerializer):
         model = Category
         fields=('id','name', 'products','image')
         
-        
+class PaymentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = PaymentHistory
+        fields = '__all__'
+
 class OrderItemSerializer(serializers.ModelSerializer):
-    # parser_classes = (MultiPartParser, FormParser)
-    # product = ProductSerializer(many=True,read_only=True)
+    # order = serializers.PrimaryKeyRelatedField(queryset=Order.objects.all())
+    # order = OrderSerializer(read_only=True)
+    # product = ProductSerializer(read_only=True)
     class Meta:
         model = OrderItem
         fields = '__all__'
         
-
-
 class OrderSerializer(serializers.ModelSerializer):
-    order_items = OrderItemSerializer(many=True, required=False)
-
-    # class Meta:
-    #     model = Order
-    #     fields = ['user', 'taxPrice', 'totalPrice', 'order_items']
-
-    # def create(self, validated_data):
-    #     order_items_data = validated_data.pop('order_items', [])
-    #     print(order_item_data)
-
-    #     order = Order.objects.create(**validated_data)
-
-    #     for order_item_data in order_items_data:
-    #         OrderItem.objects.create(order=order, **order_item_data)
-
-    #     return order
+    user = UserDataSerializer(read_only=True) 
+   
+    class Meta:
+        model = Order
+        # exclude = ('payment_history',)
+        fields = '__all__'     
+        
+class OrderWithPaymentSerializer(serializers.ModelSerializer):
+    user = UserDataSerializer(read_only=True)
+    payment_history = PaymentSerializer(many=True, read_only=True)
+    order = OrderItemSerializer(many=True,read_only=True)
 
     class Meta:
         model = Order
         fields = '__all__'
+        
+
+        
+
+
+
         
         
 # class ShippingAddressSerializer(serializers.ModelSerializer):

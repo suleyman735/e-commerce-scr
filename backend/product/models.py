@@ -73,7 +73,7 @@ class OrderItem(models.Model):
     
 class PaymentHistory(models.Model):
     user=models.ForeignKey(UserAccount, on_delete=models.CASCADE, blank=True, null=True)
-    product=models.ForeignKey(Order, on_delete=models.SET_NULL, blank=True, null=True)
+    orderpayment=models.ForeignKey(Order, on_delete=models.SET_NULL, blank=True, null=True)
     date=models.DateTimeField(auto_now_add=True)
     payment_status=models.BooleanField()
 

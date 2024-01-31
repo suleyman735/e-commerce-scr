@@ -15,6 +15,7 @@ import ProductScreen from "./pages/ProductScreen";
 import Cart from "./pages/Cart";
 import { useState,useEffect } from "react";
 import Checkout from "./pages/Checkout";
+import OrderScreen from "./pages/OrderScreen";
 
 // import { QueryClient, QueryClientProvider } from 'react-query';
 
@@ -81,6 +82,7 @@ function App() {
         <Route exact path="/verified" element={<Verified />} />
         <Route exact path="/forgot" element={<ForgotPass />} />
         <Route exact path="/reset" element={<ResetPass />} />
+        <Route exact path="/order" element={<OrderScreen />} />
         <Route
           exact
           path="/products/:category"
