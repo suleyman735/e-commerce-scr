@@ -35,6 +35,18 @@ class OrderItemAdmin(admin.ModelAdmin):
 
 admin.site.register(OrderItem,OrderItemAdmin)
 
+class ShippingAdressAdmin(admin.ModelAdmin):
+    list_display = ['address']
+    # list_filter = ['lang']
+
+admin.site.register(ShippingAdress,ShippingAdressAdmin)
+
+class ReviewAdmin(admin.ModelAdmin):
+    list_display = ['createdAt','user','product']
+    # list_filter = ['lang']
+
+admin.site.register(Review,ReviewAdmin)
+
 # class TaxPerProductAdmin(admin.ModelAdmin):
 #     list_display = ['taxPerProduct']
 #     # list_filter = ['lang']

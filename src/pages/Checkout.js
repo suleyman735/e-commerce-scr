@@ -1,18 +1,70 @@
 import React,{useEffect,useState} from 'react'
 import "./../assests/styles/checkout.css"
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+
 
 
 function Checkout({cartItems,calculateTotalPrice}) {
   const [orderData, setOrderData] = useState([cartItems]);
   const orderId = localStorage.getItem("orderId");
-  console.log(orderId);
-  const navigate = useNavigate();
+  const [formData, setFormData] = useState({
+   
+    address: '',
+    apartment: '',
+    city: '',
+    postalCode: '',
+    country: '',
+    phone: '',
+    email:'',
+    shippingPrice:'',
+    orderShipping:orderId,
+    
+  });
+
+  const handleInputChange = (e) => {
+    const { name, value, type, checked } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: type === 'checkbox' ? checked : value,
+    }));
+  };
+
+
+  const handleSubmit = async (orderId) => {
+
+    const token = localStorage.getItem("access");
+    
+    try {
+      // Adjust the API endpoint according to your server
+      const apiUrl = 'http://127.0.0.1:8000/api/shipping/';
+      
+      // Send the form data using Axios
+      const response = await axios.post(apiUrl, formData,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+      // Handle the response (if needed)
+      console.log('API Response:', response.data,
+      );
+
+      // Optionally, reset the form or perform other actions
+      // setFormData({ ...initialFormData });
+    } catch (error) {
+      // Handle errors
+      console.error('Error sending data:', error);
+    }
+  };
+
+
+
+
+
   // const getOrders
-  
   const sendOrderIrems = async (cartItems) => {
-    console.log(cartItems);
     try {
       // Get the Bearer token from wherever you store it (e.g., state, context, localStorage)
 
@@ -36,27 +88,24 @@ function Checkout({cartItems,calculateTotalPrice}) {
           },
         }
       );
+      
 
       // Handle the response as needed
-      console.log("Order sent successfully:", response);
+      
       if (response.status===201) {
-        // navigate(`/create-checkout-session/${orderId}`);
+        handleSubmit(orderId);
 
               // Dynamically create a form
       const form = document.createElement("form");
       form.action = `http://127.0.0.1:8000/api/create-checkout-session/${orderId}/`;
       form.method = "POST";
-
       // Append the form to the body (you can append it to another element if needed)
       document.body.appendChild(form);
-
       // Submit the form
       form.submit();
 
-        
       }else{
-        console.log("serverr error",response);
-       
+        console.log("serverr error",response); 
       }
     } catch (error) {
       console.error("Error sending order:", error);
@@ -72,32 +121,30 @@ function Checkout({cartItems,calculateTotalPrice}) {
 
   return (
     <div className='container checkout'>
-
+<form method='POST' onSubmit={handleSubmit}>
       <div className='billingAddress'>
-        <label>FirstName</label>
-        <input placeholder='' className='address'/>
-        <label>Company Name</label>
-        <input placeholder='' className='address'/>
-        <label>Street Address</label>
-        <input placeholder='' className='address'/>
-        <label>Apartment,floor,etc</label>
-        <input placeholder='' className='address'/>
-        <label>Town/City</label>
-        <input placeholder='' className='address'/>
-        <label>Number</label>
-        <input placeholder='' className='address'/>
-        <label>Email address</label>
-        <input placeholder='' className='address'/>
-        <div className="form-check-label" >
-        <input type="checkbox" className='checkbox' />
-     
-        Save this information for faster check-out next time
-        </div>
-
+        <label>Address</label>
+        <input placeholder='' className='address' name='address' value={formData.address}  onChange={handleInputChange}/>
+        <label>Apartment</label>
+        <input placeholder='' className='address' name='apartment' value={formData.apartment}  onChange={handleInputChange}/>
+        <label>City</label>
+        <input placeholder='' className='address' name='city' value={formData.city}  onChange={handleInputChange}/>
+        <label>PostalCode</label>
+        <input placeholder='' className='address' name='postalCode' value={formData.postalCode}  onChange={handleInputChange}/>
+        <label>Country</label>
+        <input placeholder='' className='address' name='country' value={formData.country}  onChange={handleInputChange}/>
+        <label>Phone</label>
+        <input placeholder='' className='address' name='phone' value={formData.phone}  onChange={handleInputChange}/>
+        <label>Email</label>
+        <input placeholder='' className='address' name='email' value={formData.email}  onChange={handleInputChange}/>
+        <label>shippingPrice</label>
+        <input placeholder='' className='address' name='shippingPrice' value={formData.shippingPrice}  onChange={handleInputChange}/>
 
 
 
       </div>
+      <button type='submit'>save address</button>
+      </form>
       <div className='pay'>
         <table className="table">
           <tbody>

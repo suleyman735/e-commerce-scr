@@ -7,11 +7,24 @@ from rest_framework.parsers import MultiPartParser, FormParser
 
 
 
+class ReviewSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Review
+        fields = '__all__'
+
 class ProductSerializer(serializers.ModelSerializer):
     parser_classes = (MultiPartParser, FormParser)
+    productreview = ReviewSerializer(many=True,read_only=True)
     class Meta:
         model =Product
         fields= '__all__'
+        
+class ProductDetailSerializer(serializers.ModelSerializer):
+    productreview = ReviewSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = Product
+        fields = '__all__'
         
 class CategoryListSerializer(serializers.ModelSerializer):
     # products = ProductSerializer(many=True, read_only=True)
@@ -20,15 +33,18 @@ class CategoryListSerializer(serializers.ModelSerializer):
         model = Category
         fields=('id','name', 'products','image')
         
+class ShippingAdressSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ShippingAdress
+        fields = '__all__'
+        
 class PaymentSerializer(serializers.ModelSerializer):
     class Meta:
         model = PaymentHistory
         fields = '__all__'
 
 class OrderItemSerializer(serializers.ModelSerializer):
-    # order = serializers.PrimaryKeyRelatedField(queryset=Order.objects.all())
-    # order = OrderSerializer(read_only=True)
-    # product = ProductSerializer(read_only=True)
+    
     class Meta:
         model = OrderItem
         fields = '__all__'
@@ -38,7 +54,6 @@ class OrderSerializer(serializers.ModelSerializer):
    
     class Meta:
         model = Order
-        # exclude = ('payment_history',)
         fields = '__all__'     
         
 class OrderWithPaymentSerializer(serializers.ModelSerializer):

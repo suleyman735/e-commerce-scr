@@ -107,6 +107,23 @@ class CategoryListAPIView(generics.ListAPIView):
 class ProductListView(generics.ListAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
+    
+    
+class ProductDetailView(APIView):
+    def get(self, request, pk):
+        try:
+            product = Product.objects.get(pk=pk)
+        except Product.DoesNotExist:
+            return Response({"error": "Product not found"}, status=status.HTTP_404_NOT_FOUND)
+
+        serializer = ProductDetailSerializer(product)
+        return Response(serializer.data)
+    
+
+class ReviewListView(generics.ListCreateAPIView):
+    queryset = Review.objects.all()
+    serializer_class = ReviewSerializer
+    
 
 
 class OrderListCreateView(generics.ListCreateAPIView):
@@ -147,11 +164,14 @@ class OrderListCreateView(generics.ListCreateAPIView):
             for order_data in orders_data:
                 order_id = order_data['_id']
                 payment_history = PaymentHistory.objects.filter(orderpayment_id=order_id)
-                order = OrderItem.objects.filter(order_id=order_id)
+                order = OrderItem.objects.filter(order_id=order_id)  #this order comes from OrderItem
+                orderShipping = ShippingAdress.objects.filter(orderShipping=order_id) 
                 payment_serializer = PaymentSerializer(payment_history, many=True)
-                orderItem_serializer = OrderItemSerializer(order,many=True)
+                orderItem_serializer = OrderItemSerializer(order,many=True) #this order comes from OrderItem
+                orderShipping_serializer = ShippingAdressSerializer(orderShipping,many=True)
                 order_data['payment_history'] = payment_serializer.data
-                order_data['order'] = orderItem_serializer.data
+                order_data['order'] = orderItem_serializer.data #this order comes from OrderItem
+                order_data['orderShipping'] = orderShipping_serializer.data 
         return response
 
 
@@ -173,6 +193,11 @@ class OrderItemListCreateView(generics.ListCreateAPIView):
         self.perform_create(serializer)
 
         return Response(serializer.data, status=status.HTTP_201_CREATED)
+    
+class ShippingAdressListCreateView(generics.ListCreateAPIView):
+    queryset = ShippingAdress.objects.all()
+    serializer_class = ShippingAdressSerializer
+    
 
 
     

@@ -16,6 +16,7 @@ import Cart from "./pages/Cart";
 import { useState,useEffect } from "react";
 import Checkout from "./pages/Checkout";
 import OrderScreen from "./pages/OrderScreen";
+import ProductDetails from "./pages/ProductDetails";
 
 // import { QueryClient, QueryClientProvider } from 'react-query';
 
@@ -88,6 +89,13 @@ function App() {
           path="/products/:category"
           element={
             <ProductScreen  addToCart={addToCart}/>
+          }
+        />
+                <Route
+          exact
+          path="/products/:detail"
+          element={
+            <ProductDetails />
           }
         />
       

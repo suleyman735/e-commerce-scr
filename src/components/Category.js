@@ -42,20 +42,28 @@ function Category() {
     }
 
 
-
-
-
-    useEffect(() => {
-      getCategory()
-        // Automatically move to the next slide every 5 seconds (adjust the duration as needed)
-        const intervalId = setInterval(() => {
-          nextSlide();
-        }, 5000);
+    const startInterval = () => {
+      // Automatically move to the next slide every 5 seconds (adjust the duration as needed)
+      const intervalId = setInterval(() => {
+        nextSlide();
+      }, 5000);
     
+      return intervalId;
+    };
+    
+useEffect(()=>{
+  getCategory()
+},[])
+  
+    useEffect(() => {
+      
+        // Automatically move to the next slide every 5 seconds (adjust the duration as needed)
+        const intervalId = startInterval()
         return () => {
           // Clear the interval when the component is unmounted
           clearInterval(intervalId);
         };
+        
       }, [currentSlide]);
 
 
