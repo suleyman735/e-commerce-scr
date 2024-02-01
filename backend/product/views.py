@@ -110,19 +110,47 @@ class ProductListView(generics.ListAPIView):
     
     
 class ProductDetailView(APIView):
+    
     def get(self, request, pk):
         try:
             product = Product.objects.get(pk=pk)
+            
         except Product.DoesNotExist:
             return Response({"error": "Product not found"}, status=status.HTTP_404_NOT_FOUND)
 
         serializer = ProductDetailSerializer(product)
+        
         return Response(serializer.data)
     
 
 class ReviewListView(generics.ListCreateAPIView):
-    queryset = Review.objects.all()
+    # queryset = Review.objects.all()
     serializer_class = ReviewSerializer
+    
+    def get_queryset(self):
+        product_id = self.kwargs.get('product_id')
+        
+        if product_id:
+            return Review.objects.filter(product_id=product_id)
+        else:
+            return Review.objects.all()
+    
+    def get(self, request, *args, **kwargs):
+        # Override the get method to include payment history for GET requests
+        response = super().get(request, *args, **kwargs)
+        if self.request.method == 'GET':
+            # Retrieve the payment history for each order in the response
+            reviews_data = response.data
+            # print(reviews_data)
+            for review_data in reviews_data:
+                userAccount = UserAccount.objects.filter(pk = review_data['user'])
+                user_serializer = UserDataSerializer(userAccount,many=True)
+                review_data['user'] = user_serializer.data
+
+        return response
+    
+
+    
     
 
 

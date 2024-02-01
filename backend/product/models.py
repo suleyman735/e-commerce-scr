@@ -1,5 +1,6 @@
 from django.db import models
 from accounts.models import  UserAccount
+from django.db.models import Avg
 # Create your models here.
 
 class Payment(models.Model):
@@ -36,6 +37,15 @@ class Product(models.Model):
     taxPerProduct=models.FloatField(default=0)
     _id =models.AutoField(primary_key=True,editable=False)
     
+    def update_average_rating(self):
+        # Calculate the new average rating based on all reviews for the product
+        avg_rating = self.productreview.aggregate(Avg('rating'))['rating__avg']
+        # Update the product's rating field
+        self.rating = avg_rating if avg_rating is not None else 0
+        # Save the product
+        self.save()
+
+    
     def save(self, *args, **kwargs):
         if self.taxPerProduct > 1 :
             self.taxPerProduct = self.taxPerProduct/100
@@ -55,6 +65,11 @@ class Review(models.Model):
     comment = models.TextField(null=True,blank=True)
     createdAt = models.DateTimeField(auto_now_add=True)
     _id =  models.AutoField(primary_key=True,editable=False)
+    
+    def save(self, *args, **kwargs):
+        super(Review, self).save(*args, **kwargs)
+        # After saving the review, update the product's average rating
+        self.product.update_average_rating()
 
     def __str__(self):
         return str(self.rating)

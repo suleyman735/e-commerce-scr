@@ -1,0 +1,103 @@
+.details{
+    display: flex;
+    flex-direction: column;
+    /* justify-content: center;
+    align-items: center; */
+}
+.details .detail-1 {
+    margin-top: 50px;
+    display: flex;
+    flex-direction: row;
+    /* justify-content: center;
+    align-items: flex-start; */
+}
+.details .detail-1 .detail-1-image{
+    height: 400px;
+    width: 500px;
+}
+.details .detail-1 .detail-1-image img{
+    display: flex;
+width: 400px;
+/* padding: 154px 27px 131px 27px; */
+flex-direction: column;
+justify-content: flex-end;
+align-items: center;
+
+
+}
+
+.detail-1-container{
+
+    display: flex;
+    flex-direction: column;
+    /* justify-content:space-evenly; */
+    
+    align-items: flex-start;
+}
+.detail-1-container .title{
+    color: var(--Text2, #000);
+/* Heading/24PX SemiBold */
+font-family: Inter;
+font-size: 24px;
+font-style: normal;
+font-weight: 600;
+line-height: 24px; /* 100% */
+letter-spacing: 0.72px;
+}
+.detail-1-container .star-review{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 282px;
+   
+}
+.detail-1-container .star-review .star .star-1{
+    width: 20px;
+height: 20px;
+}
+
+
+.detail-1-container .star-review .review{
+    color: var(--Text2, #000);
+/* Title/14PX Regular */
+font-family: Poppins;
+font-size: 14px;
+font-style: normal;
+font-weight: 400;
+line-height: 21px; /* 150% */
+}
+
+.detail-1-container .star-review  .stock{
+    color: var(--Button1, #0F6);
+
+/* Title/14PX Regular */
+font-family: Poppins;
+font-size: 14px;
+font-style: normal;
+font-weight: 400;
+line-height: 21px; /* 150% */
+}
+.detail-1-container .price{
+    color: var(--Text2, #000);
+
+/* Heading/24PX Regular */
+font-family: Inter;
+font-size: 24px;
+font-style: normal;
+font-weight: 400;
+line-height: 24px; /* 100% */
+letter-spacing: 0.72px;
+
+}
+
+.detail-1-container .description{
+    color: #000;
+
+    /* Title/14PX Regular */
+    font-family: Poppins;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 21px; /* 150% */
+
+}

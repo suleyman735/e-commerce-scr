@@ -93,7 +93,7 @@ function App() {
         />
                 <Route
           exact
-          path="/products/:detail"
+          path="/product/:detail"
           element={
             <ProductDetails />
           }

@@ -7,10 +7,14 @@ from rest_framework.parsers import MultiPartParser, FormParser
 
 
 
-class ReviewSerializer(serializers.ModelSerializer):
+class ReviewSerializer(serializers.ModelSerializer): 
+    
     class Meta:
         model = Review
         fields = '__all__'
+
+        
+        
 
 class ProductSerializer(serializers.ModelSerializer):
     parser_classes = (MultiPartParser, FormParser)
@@ -21,6 +25,7 @@ class ProductSerializer(serializers.ModelSerializer):
         
 class ProductDetailSerializer(serializers.ModelSerializer):
     productreview = ReviewSerializer(many=True, read_only=True)
+    
 
     class Meta:
         model = Product
